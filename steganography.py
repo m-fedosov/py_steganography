@@ -14,9 +14,9 @@ def your_message(message_type):
         bit_bits += '100110101001001010001100110010101100100'  # обозначение конца строки
         bit_bits = '01' + bit_bits  # обозначение битовой строки для автоматической дешифровки
         if len(bit_bits) > img.size[0] * img.size[1] * 3:
-            print('Размер картинки слишком маленький для введённой последовательности бит \n'
-                  'Количество бит скрытой инвормации: ' + str(len(bin_bits)) +
-                  '\nв картинке свободных бит для скрытия: ' + str(img.size[0] * img.size[1] * 3))
+            print(f'Размер картинки слишком маленький для введённой последовательности бит \n'
+                  f'Количество бит скрытой инвормации: {str(len(bit_bits))} \n'
+                  f'в картинке свободных бит для скрытия: {str(img.size[0] * img.size[1] * 3)} ')
             exit()
         return bit_bits
     elif message_type == 2:  # txt xtr
@@ -37,9 +37,9 @@ def your_message(message_type):
                 sign = '0' * (8 - len(sign)) + sign
             bit_text += sign
         if len(bit_text) > img.size[0] * img.size[1] * 3:
-            print('Размер картинки слишком маленький для введённой последовательности бит \n'
-                  'Количество бит скрытой инвормации: ' + str(len(bit_text)) +
-                  '\nв картинке свободных бит для скрытия: ' + str(img.size[0] * img.size[1] * 3))
+            print(f'Размер картинки слишком маленький для введённой последовательности бит \n'
+                  f'Количество бит скрытой инвормации: {str(len(bit_text))} \n'
+                  f'в картинке свободных бит для скрытия: {str(img.size[0] * img.size[1] * 3)}')
             exit()
         return bit_text
     elif message_type == 3:  # img
@@ -78,13 +78,14 @@ def save_picture(image):
     else:
         path_picture = (choose_path + '\\' + image_name)
         image.save(path_picture)
-        print('Картинка сохранена по пути:\n' + path_picture)
+        print(f'Картинка сохранена по пути:\n {path_picture}')
 
 
 def encode():
     choose_type = int(input('Выберите тип файла для стеганографии: \n'
                             'Битовая последовательность - 1 \n'
-                            'Текстовая строка - 2 \nИзображение - 3 \n'))
+                            'Текстовая строка - 2 \n'
+                            'Изображение - 3 \n'))
     stego_text = your_message(choose_type)
     i_stego_text = 0
     end_stego_text = len(stego_text)
@@ -123,7 +124,7 @@ def encode():
 
         mse = cnt_dfrnt/(m * n * 3)  # среднеквадратичная ошибка
         psnr = 10 * log10(255**2/(mse**2))  # пиковое отношение сигнал-шум
-        print('значение PSNR:', psnr, 'dB')
+        print(f'значение PSNR: {psnr} dB')
 
 
 def decode_by_type(bits):
