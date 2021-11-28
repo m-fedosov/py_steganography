@@ -1,8 +1,8 @@
 from PIL import Image
 from math import log10
 choice = input(':: Стеганография (Михаил Федосов):: '
-               '\n1 - зашифровать информацию в изображении '
-               '\n2 - расшифровать информацию в изображении \n')
+               '\n1 - встроить информацию в изображении '
+               '\n2 - извлечь информацию в изображении \n')
 path = input('Укажите путь к изображению-контейнеру в формате (.png): '
              '\n')  # C:\Users\mmmfe\Pictures\Saved Pictures\draw.png
 img = Image.open(path)  # C:\Users\mmmfe\Pictures\Saved Pictures\stego_img.png
