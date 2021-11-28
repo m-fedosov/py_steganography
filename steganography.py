@@ -21,7 +21,7 @@ def your_message(message_type):
     elif message_type == 2:  # txt xtr
         choose_input = int(input('Выберите: \nВвести текст врчную - 1 \nОткрыть файл (название.txt) - 2\n'))
         if choose_input == 1:
-            text = input('Введите текст для стеганографии (без символов русского алфавита): ')  # Slave
+            text = input('Введите текст для стеганографии (без символов русского алфавита): ')
         elif choose_input == 2:
             text_file = input('Введите путь к файлу .txt: \n')  # D:\Загрузки\lord.txt
             text = open(text_file, 'r').read()
