@@ -10,7 +10,7 @@ img = Image.open(path)  # C:\Users\mmmfe\Pictures\Saved Pictures\stego_img.png
 def your_message(message_type):
     if message_type == 1:  # byte str
         bit_bits = input('Введите битовую последовательность: ')
-        bit_bits += '10011011001001100011011001011100100'  # обозначение конца строки
+        bit_bits += '100110101001001010001100110010101100100'  # обозначение конца строки
         bit_bits = '01' + bit_bits  # обозначение битовой строки для автоматической дешифровки
         if len(bit_bits) > img.size[0] * img.size[1] * 3:
             print('Размер картинки слишком маленький для введённой последовательности бит \n'+
@@ -33,14 +33,15 @@ def your_message(message_type):
         bit_text = '10'  # обозначение текст для автоматической дешифровки
         for i in text:
             sign = bin(ord(i))[2:]
-            if len(sign) < 7:
-                sign = '0' + sign
+            if len(sign) < 8:
+                sign = '0' * (8 - len(sign)) + sign
             bit_text += sign
         if len(bit_text) > img.size[0] * img.size[1] * 3:
             print('Размер картинки слишком маленький для введённой последовательности бит \n'+
                   'Количество бит скрытой инвормации: ' + str(len(bit_text)) +
                   '\nв картинке свободных бит для скрытия: ' + str(img.size[0] * img.size[1] * 3))
             exit()
+        print(bit_text[2:])
         return bit_text
     elif message_type == 3:  # img
         path_stego = input(
@@ -55,7 +56,8 @@ def your_message(message_type):
                 pixel = pixel_array[i, j]
                 for k in range(3):
                     stego_pixels += '0' * (8 - len(str(bin(pixel[k]))[2:])) + str(bin(pixel[k]))[2:]
-        stego_pixels += '10011011001001100011011001011100100'  # Обозначение конца строки
+
+        stego_pixels += '100110101001001010001100110010101100100'  # Обозначение конца строки
         if len(stego_pixels) > img.size[0] * img.size[1] * 3:
             print('Размер картинки слишком маленький для скрытия в ней вашей картинки: '
                   '\n- выберите картинку для зашифрования меньшего размера'
@@ -130,8 +132,8 @@ def decode_by_type(bits):
     elif type == '10':  # текст
         stego_text = bits[2:]
         text = ''
-        for i in range(len(stego_text) // 7):
-            text += chr(int('0b' + stego_text[7 * i:7 * i + 7], 2))
+        for i in range(len(stego_text) // 8):
+            text += chr(int('0b' + stego_text[8 * i:8 * i + 8], 2))
         print(text)
     elif type == '11':  # картинка
         stego_bits = bits[26:]
@@ -160,8 +162,8 @@ def decode():
         for j in range(img.size[1]):
             pixel = pixel_array[i, j]
             last_bits += str(bin(pixel[0]))[-1] + str(bin(pixel[1]))[-1] + str(bin(pixel[2]))[-1]
-    if '10011011001001100011011001011100100' in last_bits:
-        stego_text = last_bits[0:last_bits.index('10011011001001100011011001011100100')]
+    if '100110101001001010001100110010101100100' in last_bits:
+        stego_text = last_bits[0:last_bits.index('100110101001001010001100110010101100100')]
         # MIFed - обозначение конца в бинарном виде
     else:
         print('Картинка не была зашифрована через эту программу')
